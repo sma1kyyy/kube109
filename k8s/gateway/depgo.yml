@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-deployment
+spec:
+  selector:
+    matchLabels:
+      app: go
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: go
+    spec:
+      containers:
+      - name: go-app
+        image: go-app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GATEWAY_BIND_PORT
+          value: "8080"
+        - name: DATABASE_URL
+          value: "postgres://user:pass@postgres-service:5432/demodb"
